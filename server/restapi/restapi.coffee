@@ -46,7 +46,12 @@ Api.addRoute 'publicRooms', authRequired: true,
 
 Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
 	get: ->
-	  subs = RocketChat.models.Subscriptions.findByUserId( @urlParams.userId ).fetch()
+    subscriptions = RocketChat.models.Subscriptions.findByTypeAndUserId( 'p' , @urlParams.userId ).fetch()
+    status: 'success', subscriptions: subscriptions
+
+
+
+###
 	  roomIds = []
 	  subs.forEach (s) ->
 	    if s.t == 'p' and (typeof s.roles != 'undefined')
@@ -61,10 +66,13 @@ Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
 	    rooms.push(RocketChat.models.Rooms.findOneById(rId))
 	 	console.log '---------------Room-----------------'
    console.log rooms
-   status: 'success', rooms: rooms
+
+ 	  rooms2 = []
+    subs1 = RocketChat.models.Rooms.findByUserId( @urlParams.userId  , { sort: { msgs:-1 } }).fetch()
+	  subs1.forEach (r) ->
+	      rooms2.push(r._id)
 
 
-###
 @api {get} /joinedRooms Get joined rooms
 ###
 Api.addRoute 'joinedRooms', authRequired: true,
