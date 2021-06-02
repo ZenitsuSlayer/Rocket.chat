@@ -125,7 +125,7 @@ RocketChat.API.v1.addRoute 'channel.addall', authRequired: true,
 
 		return RocketChat.API.v1.success
 			channel: RocketChat.models.Rooms.findOne({_id: @bodyParams.roomId})
-
+			
 
 # Add Users to Room
 RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,

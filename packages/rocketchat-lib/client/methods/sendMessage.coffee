@@ -18,5 +18,11 @@ Meteor.methods
 			message = RocketChat.callbacks.run 'beforeSaveMessage', message
 
 			RocketChat.promises.run('onClientMessageReceived', message).then (message) ->
+		  ChatMessage.insert message
+		  RocketChat.callbacks.run 'afterSaveMessage', message
+
+
+###			RocketChat.promises.run('onClientMessageReceived', message).then (message) ->
 				ChatMessage.insert message
 				RocketChat.callbacks.run 'afterSaveMessage', message
+###		

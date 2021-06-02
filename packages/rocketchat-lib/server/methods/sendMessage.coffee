@@ -23,8 +23,10 @@ Meteor.methods
 			return false
 
 		message.alias = user.name if not message.alias? and RocketChat.settings.get 'Message_SetNameToAliasEnabled'
-
+		Meteor.call 'addPingToFirebase', message
 		RocketChat.sendMessage user, message, room
+
+		
 
 # Limit a user to sending 5 msgs/second
 # DDPRateLimiter.addRule
