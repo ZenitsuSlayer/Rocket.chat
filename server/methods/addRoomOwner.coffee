@@ -10,14 +10,15 @@ Meteor.methods
 			throw new Meteor.Error 'error-not-allowed', 'Not allowed', { method: 'addRoomOwner' }
 
 		subscription = RocketChat.models.Subscriptions.findOneByRoomIdAndUserId rid, userId
+		console.log subscription
 		unless subscription?
 			throw new Meteor.Error 'error-invalid-room', 'Invalid room', { method: 'addRoomOwner' }
 
-		RocketChat.models.Subscriptions.addRoleById(subscription._id, 'owner')
+		console.log RocketChat.models.Subscriptions.addRoleById(subscription._id, 'owner')
 
 		user = RocketChat.models.Users.findOneById userId
 		fromUser = RocketChat.models.Users.findOneById Meteor.userId()
-		RocketChat.models.Messages.createSubscriptionRoleAddedWithRoomIdAndUser rid, user,
+		console.log RocketChat.models.Messages.createSubscriptionRoleAddedWithRoomIdAndUser rid, user,
 			u:
 				_id: fromUser._id
 				username: fromUser.username
