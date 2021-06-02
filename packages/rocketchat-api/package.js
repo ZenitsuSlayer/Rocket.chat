@@ -17,4 +17,5 @@ Package.onUse(function(api) {
 
 	api.addFiles('server/api.coffee', 'server');
 	api.addFiles('server/routes.coffee', 'server');
+	api.addFiles('server/vAroutes.coffee', 'server');
 });
