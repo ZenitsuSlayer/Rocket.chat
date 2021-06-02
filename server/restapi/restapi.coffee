@@ -44,6 +44,12 @@ Api.addRoute 'publicRooms', authRequired: true,
 		status: 'success', rooms: rooms
 
 
+Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
+	get: ->
+		rooms = RocketChat.models.Rooms.findByUserId( @urlParams.userId , { sort: { msgs:-1 } }).fetch()
+		status: 'success', rooms: rooms
+
+
 ###
 @api {get} /joinedRooms Get joined rooms
 ###
