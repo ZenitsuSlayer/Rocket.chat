@@ -139,8 +139,8 @@ RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
       Meteor.call('addUserToRoomFromAPI',roomData , userData)
     catch e
      return RocketChat.API.v1.failure e.name + ': ' + e.message
+    return RocketChat.API.v1.success
 
-return RocketChat.API.v1.success
 
 # List all users
 RocketChat.API.v1.addRoute 'users.list', authRequired: true,
@@ -180,6 +180,7 @@ RocketChat.API.v1.addRoute 'users.delete', authRequired: true,
 			return RocketChat.API.v1.failure e.name + ': ' + e.message
 
 		return RocketChat.API.v1.success
+
 
 # Create Private Group
 RocketChat.API.v1.addRoute 'groups.create', authRequired: true,
