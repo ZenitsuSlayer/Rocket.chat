@@ -17,6 +17,7 @@ Meteor.startup ->
 				type: 'bot'
 
 			RocketChat.authz.addUserRoles('rocket.cat', 'bot')
+		   	
 
 			rs = RocketChatFile.bufferToStream new Buffer(Assets.getBinary('avatars/rocketcat.png'), 'utf8')
 			RocketChatFileAvatarInstance.deleteFile "rocket.cat.jpg"
