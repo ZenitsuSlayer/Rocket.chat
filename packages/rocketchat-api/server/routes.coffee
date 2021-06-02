@@ -155,7 +155,7 @@ RocketChat.API.v1.addRoute 'room/:roomId/remove' , authRequired: true ,
 	 Meteor.runAsUser this.userId, =>
 	    Meteor.call('removeUserFromRoomFromAPI',roomData , userData)
     return RocketChat.API.v1.success 
-
+      channel: roomData
 
 
 # List all users
