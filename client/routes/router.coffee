@@ -37,6 +37,18 @@ FlowRouter.route '/login',
 		FlowRouter.go 'home'
 
 
+FlowRouter.route '/login/api/:email/:pass', action: (params, queryParams) ->
+  console.log 'Yeah! In Params :: username is : ', params.email , ' Password is : ' , params.pass
+  console.log 'Yeah! In queryParams :: username is : ', params.email , ' Password is : ' , params.pass
+
+  Meteor.loginWithPassword params.email, params.pass, FlowRouter.go 'home'  ,(error) ->
+  if error
+    console.log error.reason
+  else
+    FlowRouter.go 'home'
+
+
+
 FlowRouter.route '/home',
 	name: 'home'
 

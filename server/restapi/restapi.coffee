@@ -13,10 +13,19 @@ Api.addRoute 'version', authRequired: false,
 		version = {api: '0.1', rocketchat: '0.5'}
 		status: 'success', versions: version
 
+
+
 Api.addRoute 'publicRooms', authRequired: true,
 	get: ->
 		rooms = RocketChat.models.Rooms.findByType('c', { sort: { msgs:-1 } }).fetch()
 		status: 'success', rooms: rooms
+
+Api.addRoute 'privateRooms', authRequired: true,
+	get: ->
+		rooms = RocketChat.models.Rooms.findByType('p', { sort: { msgs:-1 } }).fetch()
+		status: 'success', rooms: rooms
+
+
 
 ###
 @api {get} /joinedRooms Get joined rooms.
