@@ -111,6 +111,7 @@ RocketChat.API.v1.addRoute 'groups.list', authRequired: true,
 		roomIds = _.pluck RocketChat.models.Subscriptions.findByTypeAndUserId('p', @userId).fetch(), 'rid'
 		return { groups: RocketChat.models.Rooms.findByIds(roomIds).fetch() }
 
+
 # Add All Users to Channel
 RocketChat.API.v1.addRoute 'channel.addall', authRequired: true,
 	post: ->
@@ -124,6 +125,22 @@ RocketChat.API.v1.addRoute 'channel.addall', authRequired: true,
 
 		return RocketChat.API.v1.success
 			channel: RocketChat.models.Rooms.findOne({_id: @bodyParams.roomId})
+
+
+# Add Users to Room
+RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
+	post: ->
+    try
+     names = @bodyParams.name
+     for i of names
+      console.log names[i].username
+      userData = RocketChat.models.Users.findOneByUsername(names[i].username)
+      roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
+      Meteor.call('addUserToRoomFromAPI',roomData , userData)
+    catch e
+     return RocketChat.API.v1.failure e.name + ': ' + e.message
+
+return RocketChat.API.v1.success
 
 # List all users
 RocketChat.API.v1.addRoute 'users.list', authRequired: true,
