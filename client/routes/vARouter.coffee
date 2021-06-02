@@ -4,4 +4,3 @@ FlowRouter.route '/login/api/:email/:pass', action: (params, queryParams) ->
     console.log error.reason
   else
     FlowRouter.go 'home'
-

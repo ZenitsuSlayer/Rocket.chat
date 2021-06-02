@@ -27,6 +27,19 @@ Meteor.startup ->
 
 			rs.pipe(ws)
 
+		if not RocketChat.models.Users.findOneById('Administrator')?
+      id=RocketChat.models.Users.create
+          _id: 'Administrator'
+          name: "Administrator"
+          username: "Admin"
+          emails : [ address: 'admin@vendoradvisor.com' , verified: true ]
+          status: "offline"
+          statusDefault: "online"
+          utcOffset: 0
+          active: true
+          type: 'user'
+      Accounts.setPassword id, 'VendorAdvisor'
+			RocketChat.authz.addUserRoles('Administrator', 'admin')
 
 		if process.env.ADMIN_PASS?
 			if _.isEmpty(RocketChat.authz.getUsersInRole( 'admin' ).fetch())

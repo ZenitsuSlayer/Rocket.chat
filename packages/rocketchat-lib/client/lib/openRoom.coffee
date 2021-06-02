@@ -18,7 +18,7 @@ currentTracker = undefined
 
 			room = RocketChat.roomTypes.findRoom(type, name, user)
 			if not room?
-				if type is 'd'
+				if type is 'd' 
 					Meteor.call 'createDirectMessage', name, (err) ->
 						if !err
 							openRoom('d', name)
@@ -30,6 +30,7 @@ currentTracker = undefined
 					Session.set 'roomNotFound', {type: type, name: name}
 					BlazeLayout.render 'main', {center: 'roomNotFound'}
 				return
+
 
 			$('.rocket-loader').remove();
 			mainNode = document.querySelector('.main-content')

@@ -35,5 +35,5 @@ Meteor.methods
 
 		Meteor.defer ->
 			RocketChat.callbacks.run 'afterJoinRoom', user, room
-
+    
 		return true
