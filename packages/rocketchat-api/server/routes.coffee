@@ -150,7 +150,7 @@ RocketChat.API.v1.addRoute 'room/:roomId/admin' , authRequired: true ,
      for i of names
       console.log names[i].username 
       userData = RocketChat.models.Users.findOneByEmailAddress(names[i].username)
-      Meteor.call('addRoomOwner', @urlParams.roomId , userData)
+      console.log Meteor.call('addRoomOwner', @urlParams.roomId , userData)
     catch e
      return RocketChat.API.v1.failure e.name.toString + ': ' + e.message.toString
     console.log 'Success'  
