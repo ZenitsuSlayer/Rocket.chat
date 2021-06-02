@@ -145,7 +145,7 @@ RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
 RocketChat.API.v1.addRoute 'room/:roomId/admin' , authRequired: true ,
 	post: ->
     try
-     console.log names = @bodyParams["user"]
+     console.log names = @bodyParams["name"]
      roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
      for i of names
       console.log names[i]["username"] 
