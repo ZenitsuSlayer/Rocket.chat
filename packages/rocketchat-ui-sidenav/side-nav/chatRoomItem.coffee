@@ -113,3 +113,4 @@ Template.chatRoomItem.events
 						RoomManager.close rid
 			else
 				swal.close()
+ 	

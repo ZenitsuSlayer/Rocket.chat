@@ -23,7 +23,7 @@ Meteor.methods
 			return false
 
 		message.alias = user.name if not message.alias? and RocketChat.settings.get 'Message_SetNameToAliasEnabled'
-		Meteor.call 'addPingToFirebase', message
+		Meteor.call 'addPingToFirebase', message , user.username
 		RocketChat.sendMessage user, message, room
 
 		

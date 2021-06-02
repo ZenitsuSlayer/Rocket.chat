@@ -46,8 +46,22 @@ Api.addRoute 'publicRooms', authRequired: true,
 
 Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
 	get: ->
-		rooms = RocketChat.models.Rooms.findByUserId( @urlParams.userId , { sort: { msgs:-1 } }).fetch()
-		status: 'success', rooms: rooms
+	  subs = RocketChat.models.Subscriptions.findByUserId( @urlParams.userId ).fetch()
+	  roomIds = []
+	  subs.forEach (s) ->
+	    if s.t == 'p' or (typeof s.roles != 'undefined')
+	      if s.roles.indexOf('owner') > -1
+	        roomIds.push(s.rid)
+	  rooms = RocketChat.models.Rooms.findByUserId( @urlParams.userId  , { sort: { msgs:-1 } }).fetch()
+	  rooms.forEach (r) ->
+	    if(roomIds.indexOf(r._id) > -1) == false
+	      roomIds.push(r._id)
+	  rooms = []
+	  roomIds.forEach (rId) ->
+	    rooms.push(RocketChat.models.Rooms.findOneById(rId))
+	 	console.log '---------------Room-----------------'
+   console.log rooms
+   status: 'success', rooms: rooms
 
 
 ###
