@@ -14,6 +14,14 @@ Api.addRoute 'version', authRequired: false,
 		status: 'success', versions: version
 
 
+Api.addRoute 'email/:email', authRequired: false,
+	get: ->
+		user = RocketChat.models.Users.findOneByEmailAddress(@urlParams.email)
+	 if user      
+    console.log user.emails
+		  status: 'success', emails: user.emails
+   else
+     status: 'failed'
 
 Api.addRoute 'publicRooms', authRequired: true,
 	get: ->
