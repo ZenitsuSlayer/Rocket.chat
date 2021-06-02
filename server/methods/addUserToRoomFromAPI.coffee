@@ -11,14 +11,14 @@ Meteor.methods
 			throw new Meteor.Error 'error-not-allowed', 'Not allowed', { method: 'addUserToRoomFromAPI' }
     
 
-		if room.t.toString() is 'd'
+		if room.t is 'd'
 			throw new Meteor.Error 'error-cant-invite-for-direct-room', 'Can\'t invite user to direct rooms', { method: 'addUserToRoomFromAPI' }
 
 		# verify if user is already in room
 
 
 
-		if room.usernames.indexOf(userData.username) isnt '-1'
+		if room.usernames.indexOf(userData.username) isnt -1
 			return true
 	 
 		newUser = RocketChat.models.Users.findOneByUsername userData.username
