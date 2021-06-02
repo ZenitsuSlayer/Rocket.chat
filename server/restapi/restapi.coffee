@@ -14,13 +14,13 @@ Api.addRoute 'version', authRequired: false,
 		status: 'success', versions: version
 
 
-Api.addRoute 'email/:email', authRequired: false,
-	get: ->
-		user = RocketChat.models.Users.findOneByEmailAddress(@urlParams.email)
+Api.addRoute 'email', authRequired: true,
+	post: ->
+		user = RocketChat.models.Users.findOneByEmailAddress(@bodyParams.email)
 	 if user      
 		  status: 'success', emails: user.emails
    else
-     status: 'failed'
+      {status: 'failed' , email: @bodyParams.email}
 
 Api.addRoute 'verify/:email', { authRequired: false }, get: ->
   decryp = undefined
