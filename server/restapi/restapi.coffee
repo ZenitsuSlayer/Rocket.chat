@@ -46,12 +46,25 @@ Api.addRoute 'publicRooms', authRequired: true,
 
 Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
 	get: ->
-    subscriptions = RocketChat.models.Subscriptions.findByTypeAndUserId( 'p' , @urlParams.userId ).fetch()
-    status: 'success', subscriptions: subscriptions
-
+    subscriptions = RocketChat.models.Subscriptions.findByTypeAndUserIdWithRole( 'p' , @urlParams.userId, ["owner"] ).fetch()
+    rooms = [] ; 
+    subscriptions.forEach (subscription) ->
+      room = RocketChat.models.Rooms.findOneById(subscription.rid)
+      members = [] ; temp = ''
+      room.usernames.forEach (username) ->
+      	temp = RocketChat.models.Subscriptions.findOneByRoomIdAndUsername(room._id, username ).fetch()[0]
+      	if temp.u.username != room.u.username
+		      members.push({"u_id": temp.u._id, "username": temp.u.username, "unread": temp.unread, 
+		      "roles": temp.roles})
+	      return ;
+	     room.usernames = members
+      rooms.push(room)
+      return ;
+    status: 'success', rooms: rooms
 
 
 ###
+RocketChat.models.Subscriptions.findByTypeAndUserId( 'p' , @urlParams.userId ).fetch()
 	  roomIds = []
 	  subs.forEach (s) ->
 	    if s.t == 'p' and (typeof s.roles != 'undefined')

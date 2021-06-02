@@ -25,6 +25,15 @@ RocketChat.models.Subscriptions = new class extends RocketChat.models._Base
 
 		return @findOne query
 
+	# FIND ONE
+	findOneByRoomIdAndUsername: (roomId, username) ->
+		query =
+			rid: roomId
+			"u.username": username
+
+		return @find query
+
+
 	# FIND
 	findByUserId: (userId, options) ->
 		query =
@@ -61,6 +70,14 @@ RocketChat.models.Subscriptions = new class extends RocketChat.models._Base
 			t: type
 			'u._id': userId
 
+		return @find query, options
+
+	findByTypeAndUserIdWithRole: (type, userId, roles , options) ->
+		roles = [].concat roles
+		query =
+			t: type
+			'u._id': userId
+			"roles": { $in: roles }
 		return @find query, options
 
 	findByTypeNameAndUserId: (type, name, userId, options) ->
