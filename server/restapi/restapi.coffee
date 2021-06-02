@@ -49,7 +49,7 @@ Api.addRoute 'allRoomsOfUser/:userId', authRequired: true,
 	  subs = RocketChat.models.Subscriptions.findByUserId( @urlParams.userId ).fetch()
 	  roomIds = []
 	  subs.forEach (s) ->
-	    if s.t == 'p' or (typeof s.roles != 'undefined')
+	    if s.t == 'p' and (typeof s.roles != 'undefined')
 	      if s.roles.indexOf('owner') > -1
 	        roomIds.push(s.rid)
 	  rooms = RocketChat.models.Rooms.findByUserId( @urlParams.userId  , { sort: { msgs:-1 } }).fetch()
