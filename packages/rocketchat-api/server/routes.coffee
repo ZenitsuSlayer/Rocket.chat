@@ -132,14 +132,30 @@ RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
 	post: ->
     try
      names = @bodyParams.name
+     roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
+     console.log names
      for i of names
-      console.log names[i].username
       userData = RocketChat.models.Users.findOneByEmailAddress(names[i].username)
-      roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
       Meteor.call('addUserToRoomFromAPI',roomData , userData)
     catch e
      return RocketChat.API.v1.failure e.name + ': ' + e.message
     return RocketChat.API.v1.success
+
+# remove User from Room
+RocketChat.API.v1.addRoute 'room/:roomId/remove' , authRequired: true ,
+	post: ->
+	 console.log userData = RocketChat.models.Users.findOneByUsername(@bodyParams.username)
+	 console.log roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
+	 Meteor.runAsUser this.userId, =>
+	    Meteor.call('removeUserFromRoomFromAPI',roomData , userData)
+
+###     for i of names
+      userData = RocketChat.models.Users.findOneByEmailAddress(names[i].username)
+      Meteor.call('addUserToRoomFromAPI',roomData , userData)
+    catch e
+     return RocketChat.API.v1.failure e.name + ': ' + e.message
+    return RocketChat.API.v1.success
+###
 
 
 # List all users
