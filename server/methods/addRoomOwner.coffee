@@ -2,7 +2,7 @@ Meteor.methods
 	addRoomOwner: (rid, userId) ->
 		unless Meteor.userId()
 			throw new Meteor.Error 'error-invalid-user', 'Invalid user', { method: 'addRoomOwner' }
-
+	 
 		check rid, String
 		check userId, String
 
