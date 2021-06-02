@@ -134,12 +134,10 @@ RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
      names = @bodyParams.name
      roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
      for i of names
-      console.log names[i].username 
       userData = RocketChat.models.Users.findOneByEmailAddress(names[i].username)
       Meteor.call('addUserToRoomFromAPI',roomData , userData)
     catch e
      return RocketChat.API.v1.failure e.name.toString + ': ' + e.message.toString
-    console.log 'Success'  
     return RocketChat.API.v1.success
       channel: roomData
 
