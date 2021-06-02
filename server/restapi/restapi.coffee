@@ -18,9 +18,9 @@ Api.addRoute 'email', authRequired: true,
 	post: ->
 		user = RocketChat.models.Users.findOneByEmailAddress(@bodyParams.email)
 	 if user      
-		  status: 'success', emails: user.emails
+		  status: 'success', user_id: user._id
    else
-      {status: 'failed' , email: @bodyParams.email}
+      {status: 'failed'}
 
 Api.addRoute 'verify/:email', { authRequired: false }, get: ->
   decryp = undefined
