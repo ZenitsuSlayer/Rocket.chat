@@ -18,10 +18,25 @@ Api.addRoute 'email/:email', authRequired: false,
 	get: ->
 		user = RocketChat.models.Users.findOneByEmailAddress(@urlParams.email)
 	 if user      
-    console.log user.emails
 		  status: 'success', emails: user.emails
    else
      status: 'failed'
+
+Api.addRoute 'verify/:email', { authRequired: false }, get: ->
+  decryp = undefined
+  encryp = undefined
+  encryp = Meteor.call('encryptParams', @urlParams.email)
+  decryp = Meteor.call('decryptParams', encryp)
+  {
+    status: 'success'
+    en: encryp
+    de: decryp
+  }
+
+
+Api.addRoute 'decode', { authRequired: false }, get: ->
+  status: 'success', parms: Meteor.call('decryptParams', @queryParams.verify)
+
 
 Api.addRoute 'publicRooms', authRequired: true,
 	get: ->
