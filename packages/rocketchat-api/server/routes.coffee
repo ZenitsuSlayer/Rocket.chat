@@ -134,7 +134,7 @@ RocketChat.API.v1.addRoute 'room/:roomId/add' , authRequired: true ,
      names = @bodyParams.name
      for i of names
       console.log names[i].username
-      userData = RocketChat.models.Users.findOneByUsername(names[i].username)
+      userData = RocketChat.models.Users.findOneByEmailAddress(names[i].username)
       roomData = RocketChat.models.Rooms.findOneById(@urlParams.roomId)
       Meteor.call('addUserToRoomFromAPI',roomData , userData)
     catch e
